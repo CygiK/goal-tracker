@@ -29,14 +29,22 @@ class SettingsScreen extends Component {
   }
 
   @autobind
-  closeDialogs () {
-    this.setState(DEFAULT_STATE)
+  addOrUpdateGoal ({ id, name, target, units, keepOpen }) {
+    const { addGoal, updateGoal } = this.props
+    if (id !== undefined) {
+      updateGoal(id, name, target, units)
+      keepOpen = false
+    } else {
+      addGoal(name, target, units)
+    }
+    if (!keepOpen) {
+      this.closeDialogs()
+    }
   }
 
-  componentWillReceiveProps ({ currentUser: { loginState } }) {
-    if (loginState !== 'success') {
-      history.push('/')
-    }
+  @autobind
+  closeDialogs () {
+    this.setState(DEFAULT_STATE)
   }
 
   @autobind
@@ -45,8 +53,17 @@ class SettingsScreen extends Component {
     this.closeDialogs()
   }
 
+  @autobind
+  openGoalAdder () {
+    this.setState({ goal: {}, dialog: 'add-or-update' })
+  }
+
   openGoalDeleter (goal) {
     this.setState({ goal, dialog: 'delete' })
+  }
+
+  openGoalEditor (goal) {
+    this.setState({ goal, dialog: 'add-or-update' })
   }
 
   render () {
@@ -79,6 +96,7 @@ class SettingsScreen extends Component {
                 {goals.map((goal) =>
                   <GoalSetting key={goal.id} goal={goal}
                     onDeleteClick={() => this.openGoalDeleter(goal)}
+                    onEditClick={() => this.openGoalEditor(goal)}
                   />
                 )}
                 {goals.length === 0 && (
@@ -88,10 +106,16 @@ class SettingsScreen extends Component {
             </CardText>
             <CardActions>
               <RaisedButton label='Ajouter un objectif' primary
-                icon={<ContentAdd />}
+                icon={<ContentAdd />} onClick={this.openGoalAdder}
               />
             </CardActions>
           </Card>
+          <AddSettingDialog
+            goal={this.state.goal}
+            open={this.state.dialog === 'add-or-update'}
+            onCancel={this.closeDialogs}
+            onAdd={this.addOrUpdateGoal}
+          />
           <DeleteSettingDialog
             goal={this.state.goal}
             open={this.state.dialog === 'delete'}
