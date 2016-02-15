@@ -19,7 +19,13 @@ import store from './store'
 render(
   <Provider store={store}>
     <MuiThemeProvider muiTheme={getMuiTheme()}>
-      <HomeScreen />
+      <Router>
+        <div>
+          <Route exact path='/' component={HomeScreen} />
+          <PrivateRoute exact path='/settings' component={SettingsScreen} />
+          <PrivateRoute exact path='/history' component={HistoryScreen} />
+        </div>
+      </Router>
     </MuiThemeProvider>
   </Provider>,
   document.getElementById('root')
