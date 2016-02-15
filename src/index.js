@@ -16,6 +16,8 @@ import PrivateRoute from './containers/PrivateRoute'
 import SettingsScreen from './containers/SettingsScreen'
 import store from './store'
 
+import './lib/clock'
+
 render(
   <Provider store={store}>
     <MuiThemeProvider muiTheme={getMuiTheme()}>
