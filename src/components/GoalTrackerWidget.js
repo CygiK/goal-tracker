@@ -1,3 +1,9 @@
+// Suivi du jour pour un objectif
+// ==============================
+
+// Section de l'écran principal, dédiée à un objectif.
+// Fournit notamment le descriptif de l'objectif et l’éventuel bouton de progression.
+
 import PropTypes from 'prop-types'
 import React from 'react'
 
@@ -8,7 +14,9 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 import Gauge from './Gauge'
 import { GoalPropType, nonNegativeInteger } from '../prop-types'
 
+// La déstructuration en force !
 const GoalTrackerWidget = ({ goal: { name, units, target }, progress, onProgress }) => {
+  // La beauté d'un ternaire multi-lignes…
   const adderComponent = target > progress
     ? <FloatingActionButton mini secondary onClick={onProgress}><ContentAdd /></FloatingActionButton>
     : <FloatingActionButton mini disabled><ActionThumbUp /></FloatingActionButton>
@@ -25,6 +33,7 @@ const GoalTrackerWidget = ({ goal: { name, units, target }, progress, onProgress
   )
 }
 
+// Comme toujours, on définit les propriétés attendues/autorisées pour validation.
 GoalTrackerWidget.propTypes = {
   goal: GoalPropType.isRequired,
   progress: nonNegativeInteger.isRequired,

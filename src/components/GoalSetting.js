@@ -1,3 +1,10 @@
+// Paramétrage d’un objectif
+// =========================
+
+// Section de l'écran de paramétrage, dédiée à un objectif.
+// Fournit notamment le descriptif de l'objectif et le menu déroulant
+// pour les actions de modification et suppression.
+
 import PropTypes from 'prop-types'
 import React from 'react'
 
@@ -12,6 +19,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 
 import { GoalPropType } from '../prop-types'
 
+// Notez la déstructuration profonde…
 const GoalSetting = ({ goal: { name, target, units }, onDeleteClick, onEditClick }) => {
   const rightIconMenu = (
     <IconMenu iconButtonElement={<IconButton><MoreVertIcon color={grey400} /></IconButton>}>
@@ -29,6 +37,7 @@ const GoalSetting = ({ goal: { name, target, units }, onDeleteClick, onEditClick
   )
 }
 
+// Comme toujours, on définit les propriétés attendues/autorisées pour validation.
 GoalSetting.propTypes = {
   goal: GoalPropType,
   onDeleteClick: PropTypes.func.isRequired,
