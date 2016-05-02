@@ -18,7 +18,11 @@ export default function goals (state = [], action) {
     case UPDATE_GOAL: {
       const { id, name, target, units } = action.payload
       const newGoal = { id, name, target, units }
-      return state.map((goal) => goal.id === id ? newGoal : goal)
+      if (state.find(({ id }) => id === action.payload.id)) {
+        return state.map((goal) => goal.id === id ? newGoal : goal)
+      }
+
+      return [...state, newGoal]
     }
 
     default:
