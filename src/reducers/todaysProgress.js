@@ -6,7 +6,7 @@ export default function todaysProgress (state = {}, action) {
       const { goalId, increment } = action.payload
       const previous = state[goalId] || 0
       const offset = Number(increment) || 0
-      return // ???
+      return { ...state, [goalId]: previous + offset }
 
     default:
       return state
